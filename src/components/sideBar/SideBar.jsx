@@ -10,12 +10,12 @@ export function SideBar() {
     <Navigation
       items={[
         {
-          title: 'Emex',
+          title: 'Operations',
           itemId: '/',
         },
         {
-          title: 'Armtek',
-          itemId: '/armtek',
+          title: 'Statistic',
+          itemId: '/Statistic',
         },
       ]}
       activeItemId={location.pathname}

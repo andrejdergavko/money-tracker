@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { EmexPage } from '../pages/emexPage';
+import { Operations } from '../pages/operations';
 
 export function Main() {
   return (
     <Switch>
-      <Route path="/armtek">Armtek</Route>
+      <Route path="/statistic">statistic</Route>
       <Route path="/">
-        <EmexPage />
+        <Operations />
       </Route>
     </Switch>
   );

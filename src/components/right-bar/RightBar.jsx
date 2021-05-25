@@ -2,6 +2,7 @@ import React from 'react';
 import { Block } from 'baseui/block';
 import { Card, StyledBody } from 'baseui/card';
 import { useStyletron } from 'baseui';
+import { FileLoader } from './file-loader';
 
 import { PrintButtonBlock } from './print-button-block';
 
@@ -19,13 +20,7 @@ export function RightBar() {
         justifyContent: 'space-between',
       })}
     >
-      <Card>
-        <StyledBody>
-          Proin ut dui sed metus pharetra hend rerit vel non mi. Nulla ornare
-          faucibus ex, non facilisis nisl.
-        </StyledBody>
-      </Card>
-      <PrintButtonBlock />
+      <FileLoader />
     </Block>
   );
 }
