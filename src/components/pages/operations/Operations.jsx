@@ -6,17 +6,11 @@ import { TransactionsTable } from './transactions-table';
 
 export function Operations() {
   return (
-    <Block
-      display="grid"
-      height="100%"
-      gridTemplateColumns="1fr 300px"
-      gridTemplateRows="115px 1fr"
-    >
-      <Block>{/* <QueryBuilder /> */}</Block>
-      <Block gridColumn="2/3" gridRow="1/3">
+    <Block display="grid" height="100%" gridTemplateColumns="1fr 250px">
+      <Block height="100%" gridColumn="2/3" gridRow="1/3">
         <RightBar />
       </Block>
-      <Block>
+      <Block height="100%">
         <TransactionsTable />
       </Block>
     </Block>

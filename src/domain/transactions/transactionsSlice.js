@@ -11,7 +11,7 @@ const initialState = {
   transactions: isEmpty(transactions) ? [] : JSON.parse(transactions),
 };
 
-export const testSlice = createSlice({
+export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
@@ -64,6 +64,22 @@ export const testSlice = createSlice({
 
       state.transactions = allTransactions;
     },
+    setTransactionsCategory: (state, action) => {
+      const category = action?.payload?.category;
+      const transactionsIds = action?.payload?.transactionsIds;
+      const allTransactions = state?.transactions;
+
+      const updatedTransactions = allTransactions.map((item) => {
+        if (transactionsIds.includes(item.id)) {
+          item.category = category;
+        }
+
+        return item;
+      });
+
+      storage.set('transactions', JSON.stringify(updatedTransactions));
+      state.transactions = updatedTransactions;
+    },
     // decrement: (state) => {
     //   state.value -= 1;
     // },
@@ -85,7 +101,10 @@ export const testSlice = createSlice({
   //   },
 });
 
-export const { setTransactions } = testSlice.actions;
+export const {
+  setTransactions,
+  setTransactionsCategory,
+} = transactionsSlice.actions;
 
 export const transactionsSelector = (state) => state.transactions.transactions;
 
@@ -98,4 +117,4 @@ export const transactionsSelector = (state) => state.transactions.transactions;
 //   }
 // };
 
-export default testSlice.reducer;
+export default transactionsSlice.reducer;

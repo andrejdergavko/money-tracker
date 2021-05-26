@@ -14,7 +14,7 @@ const formatDate = (date) => {
   const month = dateWithoutHours.split('.')[1];
   const day = dateWithoutHours.split('.')[0];
 
-  return new Date(yesr, month, day).getTime();
+  return new Date(yesr, month - 1, day).getTime();
 };
 
 export const getTransactionsFromCsv = async (path) => {

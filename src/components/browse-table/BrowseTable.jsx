@@ -15,22 +15,27 @@ import {
 const columns = [
   DatetimeColumn({
     title: 'Date',
-    cellBlockAlign: 'end',
-    mapDataToValue: (data) => data[0] && new Date(data[0]),
+    formatString: 'MM-dd-yyyy',
+    // cellBlockAlign: 'center',
+    mapDataToValue: (data) => data[0],
   }),
   StringColumn({
     title: 'Transaction name',
     mapDataToValue: (data) => data[1],
   }),
+  StringColumn({
+    title: 'Category',
+    mapDataToValue: (data) => data[2],
+  }),
   NumericalColumn({
     title: 'Sum',
     // format: NUMERICAL_FORMATS.ACCOUNTING,
     precision: 2,
-    mapDataToValue: (data) => data[2],
+    mapDataToValue: (data) => data[3],
   }),
   StringColumn({
     title: 'Currency',
-    mapDataToValue: (data) => data[3],
+    mapDataToValue: (data) => data[4],
   }),
   // BooleanColumn({
   //   title: 'is it good?',
@@ -106,7 +111,7 @@ const columns = [
 // ].map((r) => ({ id: r[0], data: r }));
 
 // eslint-disable-next-line react/prop-types
-export function BrowseTable({ rows }) {
+export function BrowseTable({ rows, handleSetCategoryButtonClick }) {
   // const [rows, setRows] = React.useState(initialRows);
 
   // function flagRows(ids) {
@@ -133,7 +138,10 @@ export function BrowseTable({ rows }) {
   const batchActions = [
     {
       label: 'Set category',
-      onClick: () => {},
+      onClick: ({ selection, clearSelection }) => {
+        handleSetCategoryButtonClick(selection.map((r) => r.id));
+        clearSelection();
+      },
       renderIcon: () => 'Set category',
     },
   ];
