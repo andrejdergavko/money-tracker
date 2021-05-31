@@ -34,6 +34,7 @@ export function BarGroupChart({
   events = false,
   margin = defaultMargin,
   isBarTypeStack,
+  colors,
 }) {
   const {
     tooltipData,
@@ -43,6 +44,7 @@ export function BarGroupChart({
     showTooltip,
     hideTooltip,
   } = useTooltip();
+  console.log(tooltipData);
   const { containerRef, TooltipInPortal } = useTooltipInPortal({
     // TooltipInPortal is rendered in a separate child of <body /> and positioned
     // with page coordinates which should be updated on scroll. consider using
@@ -84,15 +86,9 @@ export function BarGroupChart({
   });
   const colorScale = scaleOrdinal({
     domain: keys,
-    range: [
-      '#292929',
-      '#66D19E',
-      '#276EF1',
-      '#FFC043',
-      '#F1998E',
-      '#FFCF70',
-      '#E11900',
-    ],
+    range: keys.map((item) => {
+      return colors[item];
+    }),
   });
 
   // bounds
@@ -160,11 +156,25 @@ export function BarGroupChart({
                         width={bar.width}
                         height={bar.height}
                         fill={bar.color}
-                        rx={2}
-                        onClick={() => {
-                          if (!events) return;
-                          const { key, value } = bar;
-                          alert(JSON.stringify({ key, value }));
+                        // rx={2}
+                        onMouseMove={(event) => {
+                          // const coords = localPoint(
+                          //   event.target.ownerSVGElement,
+                          //   event
+                          // );
+
+                          const eventSvgCoords = localPoint(event);
+                          const left = bar.x + bar.width / 2;
+                          showTooltip({
+                            // tooltipLeft: coords.x,
+                            // tooltipTop: coords.y,
+                            tooltipTop: eventSvgCoords?.y + 110,
+                            tooltipLeft: left + 30,
+                            tooltipData: bar,
+                          });
+                        }}
+                        onMouseLeave={() => {
+                          hideTooltip();
                         }}
                       />
                     ))}

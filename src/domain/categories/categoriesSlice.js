@@ -4,22 +4,10 @@ import os from 'os';
 import { v4 as uuidv4 } from 'uuid';
 import { isEmpty } from 'lodash';
 
+import { defaultCategories } from './constants';
+
 storage.setDataPath(os.tmpdir());
 const categories = storage.getSync('categories');
-
-const defaultCategories = [
-  'food',
-  'restaurant',
-  'transport',
-  'fuel',
-  'clothes',
-  'technics',
-  'mobile/net',
-  'household needs',
-  'leisure',
-  'currency',
-  'health/education',
-];
 
 const initialState = {
   categories: isEmpty(categories) ? defaultCategories : JSON.parse(categories),

@@ -16,8 +16,6 @@ import { summarizeByOptions, MONTH_IN_MILLISECONDS } from './constants';
 
 export const Statistics = () => {
   const allCategories = useSelector(categoriesSelector);
-  const categoriesOptions = getCategoriesOptions(allCategories);
-
   const transactions = useSelector(transactionsSelector);
 
   const [dateRange, setDateRange] = React.useState({
@@ -29,18 +27,25 @@ export const Statistics = () => {
   const [isBarTypeStack, setIsBarTypeStack] = React.useState(false);
 
   const setAllCategories = () => {
-    setCategories([...categoriesOptions]);
+    setCategories([...allCategories]);
   };
 
   const chartData = aggregateDataToChart(
     transactions,
     summarizeBy[0].id,
-    categories.map((i) => i.label),
+    categories,
     {
       from: dateRange.from.getTime(),
       to: dateRange.to.getTime(),
     }
   );
+
+  const colorsByCategory = allCategories.reduce((acc, item) => {
+    return {
+      ...acc,
+      [item.label]: item.color,
+    };
+  }, {});
 
   return (
     <Block
@@ -85,7 +90,7 @@ export const Statistics = () => {
           <FormControl label={() => 'Categories'}>
             <Block display="flex">
               <Select
-                options={categoriesOptions}
+                options={allCategories}
                 value={categories}
                 placeholder="Category"
                 onChange={(params) => setCategories(params.value)}
@@ -140,6 +145,7 @@ export const Statistics = () => {
                 width={width}
                 height={height - 10}
                 isBarTypeStack={isBarTypeStack}
+                colors={colorsByCategory}
               />
             )}
           </ParentSize>

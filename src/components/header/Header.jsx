@@ -13,7 +13,7 @@ export function Header() {
   return (
     <HeaderNavigation>
       <StyledNavigationList $align={ALIGN.left}>
-        <StyledNavigationItem>App</StyledNavigationItem>
+        <StyledNavigationItem>Money</StyledNavigationItem>
       </StyledNavigationList>
       <StyledNavigationList $align={ALIGN.center} />
     </HeaderNavigation>

@@ -18,7 +18,7 @@ export function CategorySelectionModal({ isOpen, close, transactionsIds }) {
   const dispatch = useDispatch();
   const categories = useSelector(categoriesSelector);
 
-  const [category, setCategory] = React.useState(categories[0]);
+  const [category, setCategory] = React.useState(categories[0].label);
 
   const handleCategorySet = () => {
     dispatch(setTransactionsCategory({ category, transactionsIds }));
@@ -38,8 +38,8 @@ export function CategorySelectionModal({ isOpen, close, transactionsIds }) {
           >
             {categories.map((item) => {
               return (
-                <Radio key={item} value={item}>
-                  {item}
+                <Radio key={item.id} value={item.label}>
+                  {item.label}
                 </Radio>
               );
             })}

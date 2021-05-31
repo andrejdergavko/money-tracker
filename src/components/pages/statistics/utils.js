@@ -1,11 +1,5 @@
 import { isEmpty } from 'lodash';
 
-export const getCategoriesOptions = (categories) => {
-  return categories.reduce((acc, item) => {
-    return [...acc, { label: item, id: item }];
-  }, []);
-};
-
 const filterTransactionsByCategory = (transactions, categories) => {
   return transactions.filter((item) => {
     if (categories.includes(item.category)) {
@@ -28,7 +22,7 @@ const getChartDataLoyaut = (categories) => {
   return categories.reduce((acc, item) => {
     return {
       ...acc,
-      [item]: 0,
+      [item.label]: 0,
     };
   }, {});
 };
@@ -47,7 +41,7 @@ export const aggregateDataToChart = (
 
   filteredTransactions = filterTransactionsByCategory(
     filteredTransactions,
-    categories
+    categories.map((item) => item.label)
   );
 
   filteredTransactions = filterTransactionsByDateRange(
