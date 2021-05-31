@@ -7,7 +7,19 @@ import { isEmpty } from 'lodash';
 storage.setDataPath(os.tmpdir());
 const categories = storage.getSync('categories');
 
-const defaultCategories = ['auto', 'home'];
+const defaultCategories = [
+  'food',
+  'restaurant',
+  'transport',
+  'fuel',
+  'clothes',
+  'technics',
+  'mobile/net',
+  'household needs',
+  'leisure',
+  'currency',
+  'health/education',
+];
 
 const initialState = {
   categories: isEmpty(categories) ? defaultCategories : JSON.parse(categories),

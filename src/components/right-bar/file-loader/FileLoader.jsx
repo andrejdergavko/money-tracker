@@ -31,6 +31,24 @@ export function FileLoader() {
             setFile();
           }
         }}
+        overrides={{
+          ContentMessage: {
+            style: ({ $theme }) => ({
+              display: 'none',
+            }),
+          },
+          ButtonComponent: {
+            props: {
+              overrides: {
+                BaseButton: {
+                  style: ({ $theme }) => ({
+                    margin: '0',
+                  }),
+                },
+              },
+            },
+          },
+        }}
       />
       <Button
         onClick={handleFileLoad}

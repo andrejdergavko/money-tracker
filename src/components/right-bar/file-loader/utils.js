@@ -2,7 +2,8 @@ import csv from 'csv-parser';
 import fs from 'fs';
 
 const formatSum = (numberInString) => {
-  return Number(numberInString.replace(',', '.'));
+  const stringWithoutSpase = numberInString.replace(/\s/g, '');
+  return Number(stringWithoutSpase.replace(',', '.'));
 };
 
 const formatDate = (date) => {
@@ -29,6 +30,7 @@ export const getTransactionsFromCsv = async (path) => {
           name: data?.[1],
           sum: data?.[2] && formatSum(data?.[2]),
           currency: data?.[3],
+          flow: data?.[6] && formatSum(data?.[6]),
         };
         transactions.push(transaction);
       })

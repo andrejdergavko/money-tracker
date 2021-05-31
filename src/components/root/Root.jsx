@@ -8,7 +8,7 @@ const Root = () => {
   return (
     <Block
       display="grid"
-      gridTemplateColumns="140px 1fr"
+      gridTemplateColumns="120px 1fr"
       gridTemplateRows="49px 1fr"
       height="100vh"
     >

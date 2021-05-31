@@ -1,5 +1,7 @@
 import React from 'react';
 import { useStyletron } from 'baseui';
+import DeleteAlt from 'baseui/icon/delete-alt';
+import { Block } from 'baseui/block';
 import Alert from 'baseui/icon/alert';
 import Check from 'baseui/icon/check';
 import {
@@ -15,15 +17,15 @@ import {
 const columns = [
   DatetimeColumn({
     title: 'Date',
-    formatString: 'MM-dd-yyyy',
+    formatString: 'dd-MM-yyyy',
     // cellBlockAlign: 'center',
-    mapDataToValue: (data) => data[0],
+    mapDataToValue: (data) => new Date(data[0]),
   }),
   StringColumn({
     title: 'Transaction name',
     mapDataToValue: (data) => data[1],
   }),
-  StringColumn({
+  CategoricalColumn({
     title: 'Category',
     mapDataToValue: (data) => data[2],
   }),
@@ -36,6 +38,11 @@ const columns = [
   StringColumn({
     title: 'Currency',
     mapDataToValue: (data) => data[4],
+  }),
+  NumericalColumn({
+    title: 'Flow (BYN)',
+    precision: 2,
+    mapDataToValue: (data) => data[5],
   }),
   // BooleanColumn({
   //   title: 'is it good?',
@@ -66,52 +73,13 @@ const columns = [
   //   mapDataToValue: (data) => data[6],
   // }),
 ];
-// const initialRows = [
-//   ['Avatar', false, 'Action', 237, 2784, 11.7, 8.0],
-//   ['The Blind Side', false, 'Drama', 29, 309, 10.7, 7.6],
-//   ['The Dark Knight', false, 'Action', 185, 1005, 5.4, 9.0],
-//   ['ET: The Extra-Terrestrial', false, 'Drama', 11, 793, 75.5, 7.9],
-//   ['Finding Nemo', false, 'Adventure', 94, 940, 10.0, 8.1],
-//   ['Ghostbusters', false, 'Comedy', 144, 229, 1.6, 7.8],
-//   ['The Hunger Games', false, 'Thriller/Suspense', 78, 649, 8.3, 7.2],
-//   ['Iron Man 3', false, 'Action', 178, 1215, 6.8, 7.6],
-//   ['Jurassic Park', false, 'Action', 53, 1030, 19.4, 8.0],
-//   ['King Kong', false, 'Adventure', 207, 551, 2.7, 7.3],
-//   ['The Lion King', false, 'Adventure', 115, 577, 5.0, 8.0],
-//   ['Monsters, Inc.', false, 'Adventure', 115, 577, 5.0, 8.0],
-//   ['The Twilight Saga: New Moon', false, 'Drama', 50, 710, 14.2, 4.5],
-//   ['Oz the Great and Powerful', false, 'Adventure', 160, 493, 3.1, 6.6],
-//   [
-//     `Pirates of the Caribbean: Dead Man's Chest`,
-//     false,
-//     'Adventure',
-//     225,
-//     1066,
-//     4.7,
-//     7.3,
-//   ],
-//   ['Quantum of Solace', false, 'Action', 200, 586, 2.9, 6.7],
-//   ['Raiders of the Lost Ark', false, 'Adventure', 18, 390, 21.7, 8.7],
-//   [
-//     'Star Wars Ep. I: The Phantom Menace',
-//     false,
-//     'Adventure',
-//     115,
-//     1027,
-//     8.9,
-//     6.5,
-//   ],
-//   ['Titanic', false, 'Thriller/Suspense', 200, 2187, 10.9, 7.6],
-//   ['Up', false, 'Adventure', 175, 735, 4.2, 8.3],
-//   ['The Vow', false, 'Drama', 30, 196, 6.5, 6.7],
-//   ['The War of the Worlds', false, 'Action', 132, 704, 5.3, 6.5],
-//   ['X-Men: The Last Stand', false, 'Action', 210, 459, 2.2, 6.8],
-//   [`You've Got Mail`, false, 'Drama', 65, 251, 3.9, 6.3],
-//   ['Zookeeper', false, 'Romantic Comedy', 80, 170, 2.1, 5.0],
-// ].map((r) => ({ id: r[0], data: r }));
 
 // eslint-disable-next-line react/prop-types
-export function BrowseTable({ rows, handleSetCategoryButtonClick }) {
+export function BrowseTable({
+  rows,
+  handleSetCategoryButtonClick,
+  handleDeleteTransactionsButtonClick,
+}) {
   // const [rows, setRows] = React.useState(initialRows);
 
   // function flagRows(ids) {
@@ -144,27 +112,38 @@ export function BrowseTable({ rows, handleSetCategoryButtonClick }) {
       },
       renderIcon: () => 'Set category',
     },
+    {
+      label: 'Delete transactions',
+      onClick: ({ selection, clearSelection }) => {
+        handleDeleteTransactionsButtonClick(selection.map((r) => r.id));
+        clearSelection();
+      },
+      renderIcon: () => 'Delete transactions',
+    },
   ];
   const rowActions = [
     {
-      label: 'Check',
-      onClick: () => {},
-      renderIcon: () => 2,
+      label: 'Delete',
+      onClick: ({ row }) => {
+        handleDeleteTransactionsButtonClick([row.id]);
+      },
+      // eslint-disable-next-line react/display-name
+      renderIcon: ({ size }) => <DeleteAlt size={size} />,
     },
-    {
-      label: 'Remove',
-      onClick: () => {},
-      renderIcon: () => 1,
-    },
+    // {
+    //   label: 'Remove',
+    //   onClick: () => {},
+    //   renderIcon: () => 1,
+    // },
   ];
   return (
-    <div style={{ height: '99.9%' }}>
+    <Block marginLeft="10px" marginRight="10px" style={{ height: '99.9%' }}>
       <StatefulDataTable
         batchActions={batchActions}
         rowActions={rowActions}
         columns={columns}
         rows={rows}
       />
-    </div>
+    </Block>
   );
 }

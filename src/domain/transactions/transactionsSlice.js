@@ -64,6 +64,21 @@ export const transactionsSlice = createSlice({
 
       state.transactions = allTransactions;
     },
+    deleteTransactions: (state, action) => {
+      const transactionIds = action?.payload?.transactionIds;
+      const allTransactions = state?.transactions;
+
+      const updatedTransactions = allTransactions.filter((item) => {
+        if (transactionIds.includes(item.id)) {
+          return false;
+        }
+
+        return true;
+      });
+
+      storage.set('transactions', JSON.stringify(updatedTransactions));
+      state.transactions = updatedTransactions;
+    },
     setTransactionsCategory: (state, action) => {
       const category = action?.payload?.category;
       const transactionsIds = action?.payload?.transactionsIds;
@@ -104,6 +119,7 @@ export const transactionsSlice = createSlice({
 export const {
   setTransactions,
   setTransactionsCategory,
+  deleteTransactions,
 } = transactionsSlice.actions;
 
 export const transactionsSelector = (state) => state.transactions.transactions;
