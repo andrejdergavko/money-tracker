@@ -14,6 +14,7 @@ import {
 import { timeParse, timeFormat } from 'd3-time-format';
 import { format } from 'date-fns';
 import { Tooltip } from './Tooltip';
+import { getBarGroupTooltipData } from './utils';
 
 const defaultMargin = { top: 30, right: 5, bottom: 40, left: 40 };
 
@@ -158,20 +159,13 @@ export function BarGroupChart({
                         fill={bar.color}
                         // rx={2}
                         onMouseMove={(event) => {
-                          // const coords = localPoint(
-                          //   event.target.ownerSVGElement,
-                          //   event
-                          // );
-
                           const eventSvgCoords = localPoint(event);
                           const left = bar.x + bar.width / 2;
-                          showTooltip({
-                            // tooltipLeft: coords.x,
-                            // tooltipTop: coords.y,
-                            tooltipTop: eventSvgCoords?.y + 110,
-                            tooltipLeft: left + 30,
-                            tooltipData: bar,
-                          });
+                          // showTooltip({
+                          //   tooltipTop: eventSvgCoords?.y + 110,
+                          //   tooltipLeft: left + 30,
+                          //   tooltipData: getBarGroupTooltipData(bar, barGroup),
+                          // });
                         }}
                         onMouseLeave={() => {
                           hideTooltip();
@@ -203,19 +197,12 @@ export function BarGroupChart({
                       width={bar.width}
                       fill={bar.color}
                       onMouseMove={(event) => {
-                        // const coords = localPoint(
-                        //   event.target.ownerSVGElement,
-                        //   event
-                        // );
-
                         const eventSvgCoords = localPoint(event);
                         const left = bar.x + bar.width / 2;
                         showTooltip({
-                          // tooltipLeft: coords.x,
-                          // tooltipTop: coords.y,
                           tooltipTop: eventSvgCoords?.y + 110,
                           tooltipLeft: left + 30,
-                          tooltipData: bar,
+                          tooltipData: bar.bar.data,
                         });
                       }}
                       onMouseLeave={() => {
@@ -263,7 +250,7 @@ export function BarGroupChart({
           top={tooltipTop}
           left={tooltipLeft}
         >
-          <Tooltip barData={tooltipData.bar.data} />
+          <Tooltip barData={tooltipData} />
         </TooltipInPortal>
       )}
     </div>

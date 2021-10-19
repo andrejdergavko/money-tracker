@@ -56,9 +56,11 @@ export const transactionsSlice = createSlice({
       });
 
       const allTransactions = [
-        ...state.transactions,
         ...uniqueTransactionsWithIds,
-      ];
+        ...state.transactions,
+      ].sort((a, b) => {
+        return b.date - a.date;
+      });
 
       storage.set('transactions', JSON.stringify(allTransactions));
 

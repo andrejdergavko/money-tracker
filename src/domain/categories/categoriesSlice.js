@@ -49,6 +49,13 @@ export const categoriesSlice = createSlice({
 // export const { setTransactions } = categoriesSlice.actions;
 
 export const categoriesSelector = (state) => state.categories.categories;
+export const colorsByCategorySelector = (state) =>
+  state.categories.categories.reduce((acc, item) => {
+    return {
+      ...acc,
+      [item.label]: item.color,
+    };
+  }, {});
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

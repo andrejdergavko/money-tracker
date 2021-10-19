@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStyletron } from 'baseui';
+import { Tag, KIND, VARIANT } from 'baseui/tag';
 import DeleteAlt from 'baseui/icon/delete-alt';
 import { Block } from 'baseui/block';
 import Alert from 'baseui/icon/alert';
@@ -19,30 +20,64 @@ const columns = [
     title: 'Date',
     formatString: 'dd-MM-yyyy',
     // cellBlockAlign: 'center',
-    mapDataToValue: (data) => new Date(data[0]),
+    mapDataToValue: (data) => new Date(data.date),
   }),
   StringColumn({
     title: 'Transaction name',
-    mapDataToValue: (data) => data[1],
+    mapDataToValue: (data) => data.name,
   }),
   CategoricalColumn({
     title: 'Category',
-    mapDataToValue: (data) => data[2],
+    // eslint-disable-next-line react/display-name
+    mapDataToValue: (data) => {
+      return data.category;
+      // if (!data.category) {
+      //   return '';
+      // }
+
+      // return (
+      //   <Tag
+      //     closeable={false}
+      //     color={data.categoryColor}
+      //     variant={VARIANT.solid}
+      //     kind={KIND.custom}
+      //     overrides={{
+      //       Root: {
+      //         style: ({ $theme }) => ({
+      //           margin: '0px',
+      //           padding: '4px 10px 6px 10px',
+      //           height: '20px',
+      //           // color: data.color,
+      //         }),
+      //       },
+      //       // Text: {
+      //       //   style: ({ $theme }) => ({
+      //       //     // outline: `${$theme.colors.warning200} solid`,
+      //       //     // backgroundColor: $theme.colors.warning200,
+      //       //     color: data.color,
+      //       //   }),
+      //       // },
+      //     }}
+      //   >
+      //     {data.category}
+      //   </Tag>
+      // );
+    },
   }),
   NumericalColumn({
     title: 'Sum',
     // format: NUMERICAL_FORMATS.ACCOUNTING,
     precision: 2,
-    mapDataToValue: (data) => data[3],
+    mapDataToValue: (data) => data.sum,
   }),
   StringColumn({
     title: 'Currency',
-    mapDataToValue: (data) => data[4],
+    mapDataToValue: (data) => data.currency,
   }),
   NumericalColumn({
     title: 'Flow (BYN)',
     precision: 2,
-    mapDataToValue: (data) => data[5],
+    mapDataToValue: (data) => data.flow,
   }),
   // BooleanColumn({
   //   title: 'is it good?',

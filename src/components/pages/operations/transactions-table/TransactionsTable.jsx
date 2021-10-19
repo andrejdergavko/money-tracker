@@ -5,6 +5,7 @@ import {
   transactionsSelector,
   deleteTransactions,
 } from '../../../../domain/transactions/transactionsSlice';
+import { colorsByCategorySelector } from '../../../../domain/categories/categoriesSlice';
 import { BrowseTable } from '../../../browse-table';
 import { transactionsTableDataAgregstor } from './utils';
 import { CategorySelectionModal } from '../../../category-selection-modal';
@@ -13,11 +14,12 @@ import { ConfirmationModal } from '../../../confirmation-modal';
 export function TransactionsTable() {
   const dispatch = useDispatch();
   const transactions = useSelector(transactionsSelector);
+  const colorsByCategory = useSelector(colorsByCategorySelector);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRowsIds, setSelectedRowsIds] = useState([]);
 
-  const rows = transactionsTableDataAgregstor(transactions);
+  const rows = transactionsTableDataAgregstor(transactions, colorsByCategory);
 
   const onSetCategoryButtonClick = (rowsIds) => {
     setSelectedRowsIds(rowsIds);
